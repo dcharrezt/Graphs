@@ -1,0 +1,149 @@
+#ifndef GRAFO_H
+#define GRAFO_H
+
+#include <iostream>
+#include <map>
+#include <vector>
+#include <tuple>
+#include <list>
+#include <stack>
+#include <algorithm>
+#include <typeinfo>
+#include <queue>
+
+using namespace std;
+
+typedef pair< double, int >                              T_Arista;
+typedef vector < T_Arista >                              T_Adyasentes;
+typedef tuple< string, T_Adyasentes, bool>               T_Vertex;
+
+bool operator==( const T_Vertex & a , const T_Vertex & b) {
+	return get<0>(a) == get<0>(b);
+}
+
+bool operator>(T_Vertex & a , T_Vertex & b) {
+	return get<0>(a) > get<0>(b);
+}
+
+bool operator<(T_Vertex & a , T_Vertex & b) {
+	return get<0>(a) < get<0>(b);
+}
+
+typedef vector<T_Vertex>   			  	T_Grafo;
+typedef vector<T_Vertex>::iterator    	T_Iterator_Grafo;
+
+class Grafo {
+private:
+	T_Grafo  m_Grafo;
+public:
+	Grafo(){};
+
+	void insert_vertex(string v);
+	void insert_Arista(string v1, string v2, double edge);
+	void profundidad();
+	void mostrar();
+
+	//ALGORITMOS
+	void Dijkstra(string v);
+	void Kruskal();
+	void Prim();
+};
+
+
+void Grafo::insert_vertex(string v) {
+	T_Vertex vertice = tuple<string,T_Adyasentes,bool>(v,vector<T_Arista>(),false);
+	m_Grafo.push_back(vertice);
+}
+
+void Grafo::insert_Arista(string v1, string v2, double edge) {
+	T_Vertex V1 =  tuple<string,T_Adyasentes,bool>(v1,vector<T_Arista>(),false);
+	T_Vertex V2 =  tuple<string,T_Adyasentes,bool>(v2,vector<T_Arista>(),false);
+
+	T_Grafo::iterator it1 = find(m_Grafo.begin(),m_Grafo.end(), V1);
+	T_Grafo::iterator it2 = find(m_Grafo.begin(),m_Grafo.end(), V2);
+
+	if (it1 != m_Grafo.end() && it2 != m_Grafo.end()) {
+		int pos2 = distance(m_Grafo.begin(),it2);
+		get<1>(*it1).push_back(T_Arista(edge,pos2));
+	}
+}
+
+void Grafo::profundidad() {
+	cout<<"Profundidad:  "<<endl;
+	stack< T_Iterator_Grafo >    pila;
+	T_Iterator_Grafo it = m_Grafo.begin();
+	pila.push(it);
+
+	while(!pila.empty()) {
+		T_Iterator_Grafo tmp = pila.top();
+		pila.pop();
+		cout<< get<0>(*tmp) <<endl;;
+		get<2>(*tmp) = true;
+		T_Adyasentes & adyasentes  = get<1>(*tmp);
+		int pos;
+
+		for( int i = 0; i<adyasentes.size() ;i++ ) {
+			pos = adyasentes[i].second;
+			if (!get<2>(m_Grafo[pos])) {
+				pila.push(m_Grafo.begin()+pos);
+			}
+		}
+	}
+}
+
+void Grafo::mostrar() {
+	for (auto i: m_Grafo) {
+		cout<<"Vertice:  "<<get<0>(i)<<endl;
+		for(auto j:get<1>(i)) {
+		  cout<<"\t Peso: "<<j.first<<"  Para: "<<get<0>(m_Grafo[j.second])<<endl;
+		}
+	}
+}
+
+void Grafo::Dijkstra(string v) {
+
+    priority_queue< T_Vertex, vector < T_Vertex> , greater<T_Vertex> > pq;
+
+    vector<int> dist(m_Grafo.size(), 99999);
+
+	T_Vertex V1 =  tuple<string,T_Adyasentes,bool>(v,vector<T_Arista>(),false);
+	T_Grafo::iterator it1 = find(m_Grafo.begin(),m_Grafo.end(), V1);
+	int src = distance(m_Grafo.begin(),it1);
+	dist[src] = 0;
+
+	for( auto m : m_Grafo) {
+		if ( get<0>(m) == v) {
+			pq.push(m);
+			break;
+		}
+	}
+
+    while (!pq.empty()) {
+		T_Vertex V2 = pq.top();
+		T_Iterator_Grafo temp = find(m_Grafo.begin(),m_Grafo.end(), V2);
+		int u = distance(m_Grafo.begin(), temp);
+        pq.pop();
+     	T_Iterator_Grafo i;
+
+        for (i = m_Grafo.begin(); i != m_Grafo.end(); ++i) {
+			for( auto ms : get<1>(*i) ) {
+				int pos = ms.second;
+	            int weight = ms.first;
+
+				if ( dist[pos] > dist[u] + weight) {
+					dist[pos] = dist[u] + weight;
+					pq.push( m_Grafo[pos] );
+				}
+			}
+        }
+    }
+}
+
+void Grafo::Kruskal() {
+
+}
+void Grafo::Prim() {
+
+}
+
+#endif
