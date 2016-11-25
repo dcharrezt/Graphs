@@ -100,6 +100,8 @@ void Grafo::mostrar() {
 	}
 }
 
+
+// Recibe desde donde se hallaran las distancias a todos los demas vertices
 void Grafo::Dijkstra(string v) {
 
     priority_queue< T_Vertex, vector < T_Vertex> , greater<T_Vertex> > pq;
@@ -137,6 +139,10 @@ void Grafo::Dijkstra(string v) {
 			}
         }
     }
+
+	/* Llena el vector con las distancias que tienen el mismo indice de los
+		vertices en m_Grafo */
+
 }
 
 void Grafo::Kruskal() {
