@@ -18,8 +18,6 @@ typedef vector < T_Arista >                              T_Adyasentes;
 typedef tuple< string, T_Adyasentes, bool>               T_Vertex;
 
 
-
-
 bool operator==( const T_Vertex & a , const T_Vertex & b) {
 	return get<0>(a) == get<0>(b);
 }
@@ -62,23 +60,18 @@ struct DisjointSets
     // Encuentra el padre de u
     int find(int u)
     {
-        /* Make the parent of the nodes in the path
-           from u--> parent[u] point to parent[u] */
         if (u != parent[u])
             parent[u] = find(parent[u]);
         return parent[u];
     }
 
-    // Union by rank
     void merge(int x, int y)
     {
         x = find(x), y = find(y);
 
-        /* Make tree with smaller height
-           a subtree of the other tree  */
         if (rnk[x] > rnk[y])
             parent[y] = x;
-        else // If rnk[x] <= rnk[y]
+        else
             parent[x] = y;
 
         if (rnk[x] == rnk[y])
