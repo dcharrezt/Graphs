@@ -17,6 +17,9 @@ typedef pair< double, int >                              T_Arista;
 typedef vector < T_Arista >                              T_Adyasentes;
 typedef tuple< string, T_Adyasentes, bool>               T_Vertex;
 
+
+
+
 bool operator==( const T_Vertex & a , const T_Vertex & b) {
 	return get<0>(a) == get<0>(b);
 }
@@ -32,6 +35,57 @@ bool operator<(T_Vertex & a , T_Vertex & b) {
 typedef vector<T_Vertex>   			  	T_Grafo;
 typedef vector<T_Vertex>::iterator    	T_Iterator_Grafo;
 
+
+// Representa una estructura de conjuntos disjuntos
+struct DisjointSets
+{
+    int *parent, *rnk;
+    int n;
+
+    // Constructor.
+    DisjointSets(int n)
+    {
+        this->n = n;
+        parent = new int[n+1];
+        rnk = new int[n+1];
+
+        // Inicialmente todos los vertices tienen diferente conjunto y rank 0
+        for (int i = 0; i <= n; i++)
+        {
+            rnk[i] = 0;
+
+            // Cada elemento es padre de si mismo
+            parent[i] = i;
+        }
+    }
+
+    // Encuentra el padre de u
+    int find(int u)
+    {
+        /* Make the parent of the nodes in the path
+           from u--> parent[u] point to parent[u] */
+        if (u != parent[u])
+            parent[u] = find(parent[u]);
+        return parent[u];
+    }
+
+    // Union by rank
+    void merge(int x, int y)
+    {
+        x = find(x), y = find(y);
+
+        /* Make tree with smaller height
+           a subtree of the other tree  */
+        if (rnk[x] > rnk[y])
+            parent[y] = x;
+        else // If rnk[x] <= rnk[y]
+            parent[x] = y;
+
+        if (rnk[x] == rnk[y])
+            rnk[y]++;
+    }
+};
+
 class Grafo {
 private:
 	T_Grafo  m_Grafo;
@@ -45,7 +99,7 @@ public:
 
 	//ALGORITMOS
 	void Dijkstra(string v);
-	void Kruskal();
+	int Kruskal();
 	void Prim();
 };
 
@@ -145,11 +199,53 @@ void Grafo::Dijkstra(string v) {
 
 }
 
-void Grafo::Kruskal() {
+int Grafo::Kruskal() {
+
+    int total = 0;
+	int tam = m_Grafo.size();
+
+	vector< pair<int, T_Arista>> edges;
+	int c = 0;
+	for ( auto i : m_Grafo) {
+		for( auto j : get<1>(i) ) {
+				edges.push_back(make_pair(c,j));
+		}
+		c++;
+	}
+
+    sort(edges.begin(), edges.end());
+    DisjointSets ds(tam);
+
+    for ( auto ms : edges ) {
+        int u = ms.first;
+        int v = ms.second.second;
+
+        int set_u = ds.find(u);
+        int set_v = ds.find(v);
+
+        if (set_u != set_v)
+        {
+			// Imprime arista que etara en el arbol de expacion minima
+            cout << u << " - " << v << endl;
+
+            // actualizar el total
+            total += ms.second.first;
+
+            // une dos conjuntos
+            ds.merge(set_u, set_v);
+        }
+    }
+
+    return total;
 
 }
 void Grafo::Prim() {
 
 }
+
+
+
+
+
 
 #endif
