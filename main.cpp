@@ -62,8 +62,8 @@ public:
 		vtkSmartPointer<vtkActor> actor3 = vtkSmartPointer<vtkActor>::New();
 		actor3->SetMapper(mapper3);
 
-		this->GetDefaultRenderer()->AddViewProp(actor3);
-		this->GetDefaultRenderWindow()->render();
+		this->GetDefaultRenderer()->AddActor(actor3);
+		//this->GetDefaultRenderWindow()->render();
 		///sigue haciendo su comportamiento normal
 		vtkInteractorStyleTrackballCamera::OnLeftButtonDown();
 	}
@@ -128,8 +128,8 @@ int main(int, char*[])
 
 	//window->StereoCapableWindowOn();
 	//renderer->AddActor(actor);
-	renderer->AddViewProp(actor);
-	renderer->AddViewProp(actor2);
+	renderer->AddActor(actor);
+	renderer->AddActor(actor2);
 	renderer->SetBackground(1,1,1);
 	window->Render();
 ///
@@ -139,10 +139,11 @@ int main(int, char*[])
 
 	//añado mi propio click
 	vtkSmartPointer<MyMouseEvent> style1 = vtkSmartPointer<MyMouseEvent>::New();
-	//vtkSmartPointer<vtkInteractorStyleTrackballCamera> style2 = vtkSmartPointer<vtkInteractorStyleTrackballCamera>::New();
+	vtkSmartPointer<vtkInteractorStyleTrackballCamera> style2 = vtkSmartPointer<vtkInteractorStyleTrackballCamera>::New();
 	
 	//inicializacion
-	interactor->SetInteractorStyle(style1);
+	//interactor->SetInteractorStyle(style1);
+
 	//interactor->SetInteractorStyle(style2);
 
 	interactor->Initialize();
