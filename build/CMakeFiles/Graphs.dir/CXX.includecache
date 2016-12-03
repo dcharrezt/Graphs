@@ -1,0 +1,32 @@
+#IncludeRegexLine: ^[ 	]*#[ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/eduardob/Desktop/AED_Project/Graphs/grafo.h
+iostream
+-
+map
+-
+vector
+-
+tuple
+-
+list
+-
+stack
+-
+algorithm
+-
+typeinfo
+-
+queue
+-
+
+/home/eduardob/Desktop/AED_Project/Graphs/main.cpp
+grafo.h
+/home/eduardob/Desktop/AED_Project/Graphs/grafo.h
+
