@@ -4,7 +4,11 @@ set(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_CXX
+<<<<<<< HEAD
   "/home/ms/AED/Graph/main.cpp" "/home/ms/AED/Graph/build/CMakeFiles/Graphs.dir/main.cpp.o"
+=======
+  "/home/eduardob/Desktop/AED_Project/main.cpp" "/home/eduardob/Desktop/AED_Project/build/CMakeFiles/Graphs.dir/main.cpp.o"
+>>>>>>> c8ea407601d71f6547978b67ef17cdcea64806a8
   )
 set(CMAKE_CXX_COMPILER_ID "GNU")
 
