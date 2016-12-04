@@ -6,6 +6,7 @@
 #include <unordered_map>
 #include <algorithm>
 #include <climits>
+#include <queue>
 
 using namespace std;
 
@@ -46,7 +47,7 @@ public:
 
 	void kruskal();
 	void prim(D root);
-	void dijsktra(D root);
+	void dijkstra(D root);
 };
 
 template <class D, class W>
@@ -63,7 +64,7 @@ void Graph<D, W>::print_graph() {
 		cout<<"vertex:  "<<i<<endl;
 		vector< pair<D, Edge<D,W>> > adj = adjacent(i);
 		for(auto j: adj) {
-			cout<<"\t Weighr: "<<j.second.weight<<"  To: "<< j.first<<endl;
+			cout<<"\t Weight: "<<j.second.weight<<"  To: "<< j.first<<endl;
 		}
 	}
 }
@@ -86,11 +87,11 @@ void Graph<D,W>::kruskal() {
 		PARENT[c] = c;
 		RANK[c] = 0;
 	}
-
-	sort(edges.begin(), edges.end(), [](Edge<D, W> x, Edge<D, W> y)
+	auto c_edges = edges;
+	sort(c_edges.begin(), c_edges.end(), [](Edge<D, W> x, Edge<D, W> y)
 					{return x.weight < y.weight;});   // O(E*log(E))
 
-	for (Edge<D, W> e : edges) {         // O(E)
+	for (Edge<D, W> e : c_edges) {         // O(E)
 		char root1 = find_parent(e.vertex1);  // O(E) worst case
 		char root2 = find_parent(e.vertex2);
 		if (root1 != root2) {
@@ -148,8 +149,43 @@ void Graph<D,W>::prim(D root) {
 }
 
 template <class D, class W>
-void Graph<D, W>::dijsktra(D src) {
+void Graph<D, W>::dijkstra(D src) {
 
+	priority_queue<pair<W,D>, vector<pair<W,D>>, greater<pair<W,D>>> pq;
+	vector<int> dist(vertices.size(), INT_MAX); 		// distances as infinite
+
+	pq.push(make_pair(0, src));
+
+	auto it = find(vertices.begin(),vertices.end(),src);
+  	int pos = distance(vertices.begin(), it);
+	dist[pos] = 0;
+
+	while (!pq.empty()) {
+		auto u = pq.top().second;
+		pq.pop();
+
+		it = find(vertices.begin(),vertices.end(),u);
+	  	pos = distance(vertices.begin(), it);
+
+		vector< pair<D, Edge<D,W>> > adj = adjacent(u);
+		for(auto j: adj) {
+			auto m = j.first;
+            auto s = j.second.weight;
+
+			auto it2 = find(vertices.begin(),vertices.end(),m);
+		  	int pos2 = distance(vertices.begin(), it2);
+
+			if (dist[pos2] > dist[pos] + s) {
+                dist[pos2] = dist[pos] + s;
+				cout << "Pushing " << m << " -> w:  " << dist[pos2] << endl;
+                pq.push(make_pair(dist[pos2], m));
+            }
+		}
+	}
+
+	cout << "Distances from source" << endl;
+	for (int i = 0; i < vertices.size(); ++i)
+		cout << vertices[i] << " -> " << dist[i] << endl;
 }
 
 
