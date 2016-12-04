@@ -1,4 +1,5 @@
 #include "grafo.h"
+#include "graph.h"
 
 int main()
 {
