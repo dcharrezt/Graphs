@@ -111,7 +111,9 @@ void Grafo::insert_Arista(string v1, string v2, double edge) {
 
 	if (it1 != m_Grafo.end() && it2 != m_Grafo.end()) {
 		int pos2 = distance(m_Grafo.begin(),it2);
+		// int pos1 = distance(m_Grafo.begin(),it1);
 		get<1>(*it1).push_back(T_Arista(edge,pos2));
+		// get<1>(*it2).push_back(T_Arista(edge,pos1));
 	}
 }
 
@@ -197,11 +199,11 @@ int Grafo::Kruskal() {
     int total = 0;
 	int tam = m_Grafo.size();
 
-	vector< pair<int, T_Arista>> edges;
+	vector< pair< int ,pair<int, int>> edges;
 	int c = 0;
 	for ( auto i : m_Grafo) {
 		for( auto j : get<1>(i) ) {
-				edges.push_back(make_pair(c,j));
+				edges.push_back(make_pair(j.first,make_pair(c,j.second)));
 		}
 		c++;
 	}
@@ -210,7 +212,7 @@ int Grafo::Kruskal() {
     DisjointSets ds(tam);
 
     for ( auto ms : edges ) {
-        int u = ms.first;
+        int u = ms.second.first;
         int v = ms.second.second;
 
         int set_u = ds.find(u);
@@ -222,7 +224,7 @@ int Grafo::Kruskal() {
             cout << u << " - " << v << endl;
 
             // actualizar el total
-            total += ms.second.first;
+            total += ms.first;
 
             // une dos conjuntos
             ds.merge(set_u, set_v);

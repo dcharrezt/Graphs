@@ -1,4 +1,7 @@
 #include "grafo.h"
+<<<<<<< HEAD
+#include "graph.h"
+=======
 #include "vtkPolyDataMapper.h"
 #include "vtkSphereSource.h"
 #include "vtkActor.h"
@@ -17,6 +20,7 @@
 #include <vtkObjectFactory.h>
 #include <vtkTDxInteractorStyleCamera.h>
 #include <vtkTDxInteractorStyleSettings.h>
+>>>>>>> c8ea407601d71f6547978b67ef17cdcea64806a8
 
 Grafo hola;
 

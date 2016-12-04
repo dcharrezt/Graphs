@@ -1,4 +1,8 @@
+<<<<<<< HEAD
+# Install script for directory: /home/ms/AED/Graph
+=======
 # Install script for directory: /home/eduardob/Desktop/AED_Project
+>>>>>>> c8ea407601d71f6547978b67ef17cdcea64806a8
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -40,5 +44,9 @@ endif()
 
 string(REPLACE ";" "\n" CMAKE_INSTALL_MANIFEST_CONTENT
        "${CMAKE_INSTALL_MANIFEST_FILES}")
+<<<<<<< HEAD
+file(WRITE "/home/ms/AED/Graph/build/${CMAKE_INSTALL_MANIFEST}"
+=======
 file(WRITE "/home/eduardob/Desktop/AED_Project/build/${CMAKE_INSTALL_MANIFEST}"
+>>>>>>> c8ea407601d71f6547978b67ef17cdcea64806a8
      "${CMAKE_INSTALL_MANIFEST_CONTENT}")

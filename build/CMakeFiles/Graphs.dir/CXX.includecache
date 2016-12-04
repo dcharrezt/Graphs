@@ -6,7 +6,11 @@
 
 #IncludeRegexTransform: 
 
+<<<<<<< HEAD
+/home/ms/AED/Graph/grafo.h
+=======
 /home/eduardob/Desktop/AED_Project/grafo.h
+>>>>>>> c8ea407601d71f6547978b67ef17cdcea64806a8
 iostream
 -
 map
@@ -26,6 +30,19 @@ typeinfo
 queue
 -
 
+<<<<<<< HEAD
+/home/ms/AED/Graph/graph.h
+vector
+-
+algorithm
+-
+
+/home/ms/AED/Graph/main.cpp
+grafo.h
+/home/ms/AED/Graph/grafo.h
+graph.h
+/home/ms/AED/Graph/graph.h
+=======
 /home/eduardob/Desktop/AED_Project/main.cpp
 grafo.h
 /home/eduardob/Desktop/AED_Project/grafo.h
@@ -813,4 +830,5 @@ stdint.h
 -
 inttypes.h
 -
+>>>>>>> c8ea407601d71f6547978b67ef17cdcea64806a8
 
