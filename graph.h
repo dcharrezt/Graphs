@@ -21,7 +21,7 @@ public:
 template <class D, class W>
 class Graph {
 public:
-	vector<D> vertice;
+	vector<D> vertices;
 	vector<Edge<D,W>> edges;
 
 	unordered_map<D, D> PARENT;
@@ -70,7 +70,7 @@ void Graph<D, W>::print_graph() {
 
 template <class D, class W>
 void Graph<D, W>::add_vertex(D v) {
-	vertice.push_back(v);
+	vertices.push_back(v);
 }
 
 template <class D, class W>
@@ -82,7 +82,7 @@ template <class D, class W>
 void Graph<D,W>::kruskal() {
 	vector<Edge<D, W>> res;
 
-	for (auto c : vertice) {
+	for (auto c : vertices) {
 		PARENT[c] = c;
 		RANK[c] = 0;
 	}
@@ -91,8 +91,8 @@ void Graph<D,W>::kruskal() {
 					{return x.weight < y.weight;});   // O(E*log(E))
 
 	for (Edge<D, W> e : edges) {         // O(E)
-		char root1 = find(e.vertex1);  // O(E) worst case
-		char root2 = find(e.vertex2);
+		char root1 = find_parent(e.vertex1);  // O(E) worst case
+		char root2 = find_parent(e.vertex2);
 		if (root1 != root2) {
 			res.push_back(e);
 			if (RANK[root1] > RANK[root2]) {
@@ -116,12 +116,12 @@ void Graph<D,W>::prim(D root) {
 	unordered_map<D, D> PARENT;
 	unordered_map<D, W> KEY;
 
-	for (auto c : vertice) {
+	for (auto c : vertices) {
 		PARENT[c] = '\0';
 		KEY[c] = INT_MAX;
 	}
 	KEY[root] = 0;
-	vector<D> Q = vertice;
+	vector<D> Q = vertices;
 
 	while (!Q.empty()) {    // O(V)
 		D u = *std::min_element(Q.begin(), Q.end(), [&](D x, D y)
