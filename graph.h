@@ -24,6 +24,9 @@ public:
 	vector<D> vertice;
 	vector<Edge<D,W>> edges;
 
+	unordered_map<D, D> PARENT;
+	unordered_map<D, W> RANK;
+
 	vector< pair<D, Edge<D,W>> > adjacent(D u) {
 		vector< pair<D, Edge<D,W> >> res;
 		for (Edge<D,W> e : edges) {
@@ -36,6 +39,8 @@ public:
 		return res;
 	}
 
+	D find_parent(D v);
+	void print_graph();
 	void add_vertex(D v);
 	void add_edge(D v1, D v2, W w);
 
@@ -44,14 +49,23 @@ public:
 	void dijsktra(D root);
 };
 
-unordered_map<char, char> PARENT;
-unordered_map<char, int> RANK;
-
-char find(char vertex) {
+template <class D, class W>
+D Graph<D, W>::find_parent(D vertex) {
 	if (PARENT[vertex] == vertex)
 		return PARENT[vertex];
 	else
-		return find(PARENT[vertex]);
+		return find_parent(PARENT[vertex]);
+}
+
+template <class D, class W>
+void Graph<D, W>::print_graph() {
+	for (auto i: vertices) {
+		cout<<"vertex:  "<<i<<endl;
+		vector< pair<D, Edge<D,W>> > adj = adjacent(i);
+		for(auto j: adj) {
+			cout<<"\t Weighr: "<<j.second.weight<<"  To: "<< j.first<<endl;
+		}
+	}
 }
 
 template <class D, class W>
