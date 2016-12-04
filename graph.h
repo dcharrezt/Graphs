@@ -36,6 +36,9 @@ public:
 		return res;
 	}
 
+	void add_vertex(D v);
+	void add_edge(D v1, D v2, W w);
+
 	void kruskal();
 	void prim(D root);
 	void dijsktra(D root);
@@ -49,6 +52,16 @@ char find(char vertex) {
 		return PARENT[vertex];
 	else
 		return find(PARENT[vertex]);
+}
+
+template <class D, class W>
+void Graph<D, W>::add_vertex(D v) {
+	vertice.push_back(v);
+}
+
+template <class D, class W>
+void Graph<D, W>::add_edge(D org, D dest, W weight) {
+	edges.push_back(Edge<D, W>( org, dest, weight));
 }
 
 template <class D, class W>
