@@ -11,6 +11,7 @@
 #include "vtkSmartPointer.h"
 #include "vtkInteractorStyleTrackball.h"
 #include <vtkInteractorStyleTrackballCamera.h>
+#include <vtkInteractorObserver.h>
 #include <vtkPropPicker.h>
 #include <vtkCoordinate.h>
 #include <vtkObjectFactory.h>
@@ -31,14 +32,15 @@ public:
 					<<this->Interactor->GetEventPosition()[2]
 					<<std::endl;
 		///guardo las coordenadas y las vuelvo coordenadas del mundo
-		//int x = Interactor->GetEventPosition()[0];
-		//int y = Interactor->GetEventPosition()[1];
-		/*vtkSmartPointer<vtkCoordinate> coordinate = vtkSmartPointer<vtkCoordinate>::New();
+		int x = Interactor->GetEventPosition()[0];
+		int y = Interactor->GetEventPosition()[1];
+
+		vtkSmartPointer<vtkCoordinate> coordinate = vtkSmartPointer<vtkCoordinate>::New();
 
 		coordinate->SetCoordinateSystemToDisplay();
   		coordinate->SetValue(x,y,0);
   		double* world = coordinate->GetComputedWorldValue(this->Interactor->GetRenderWindow()->GetRenderers()->GetFirstRenderer());
-
+/*
 		//creo una ball con cada click en las coordenas que se hizo click
 		vtkSmartPointer<vtkSphereSource> sphere = vtkSmartPointer<vtkSphereSource>::New();
 		sphere->SetCenter(world[0],world[1],world[2]);
@@ -52,7 +54,7 @@ public:
 		this->GetDefaultRenderer()->AddViewProp(actor);
 	*/
 		vtkSmartPointer<vtkSphereSource> sphere3 = vtkSmartPointer<vtkSphereSource>::New();
-		sphere3->SetCenter(20.0,20.0,20.0);
+		sphere3->SetCenter(world[0],world[1],world[2]);
 		sphere3->SetRadius(3.0);
 		sphere3->Update();
 
@@ -126,10 +128,14 @@ int main(int, char*[])
 	vtkSmartPointer<vtkRenderWindowInteractor> interactor = vtkSmartPointer<vtkRenderWindowInteractor>::New();
 	interactor->SetRenderWindow(window);
 
+	//añado mi propio click
+	vtkSmartPointer<MyMouseEvent> style1 = vtkSmartPointer<MyMouseEvent>::New();
+	style1->SetDefaultRenderer(renderer);
+	interactor->SetInteractorStyle(style1);
 	//window->StereoCapableWindowOn();
 	//renderer->AddActor(actor);
-	renderer->AddActor(actor);
-	renderer->AddActor(actor2);
+	renderer->AddViewProp(actor);
+	renderer->AddViewProp(actor2);
 	renderer->SetBackground(1,1,1);
 	window->Render();
 ///
@@ -137,16 +143,16 @@ int main(int, char*[])
 ///
 	
 
-	//añado mi propio click
-	vtkSmartPointer<MyMouseEvent> style1 = vtkSmartPointer<MyMouseEvent>::New();
-	vtkSmartPointer<vtkInteractorStyleTrackballCamera> style2 = vtkSmartPointer<vtkInteractorStyleTrackballCamera>::New();
+	//añado mi propio click(wrong)
+	//vtkSmartPointer<MyMouseEvent> style1 = vtkSmartPointer<MyMouseEvent>::New();
+	//vtkSmartPointer<vtkInteractorStyleTrackballCamera> style2 = vtkSmartPointer<vtkInteractorStyleTrackballCamera>::New();
 	
 	//inicializacion
 	//interactor->SetInteractorStyle(style1);
 
 	//interactor->SetInteractorStyle(style2);
 
-	interactor->Initialize();
+	//interactor->Initialize();
 	interactor->Start();
 
 	return EXIT_SUCCESS;

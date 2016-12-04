@@ -53,6 +53,8 @@ vtkInteractorStyleTrackball.h
 /home/eduardob/Desktop/AED_Project/vtkInteractorStyleTrackball.h
 vtkInteractorStyleTrackballCamera.h
 -
+vtkInteractorObserver.h
+-
 vtkPropPicker.h
 -
 vtkCoordinate.h
