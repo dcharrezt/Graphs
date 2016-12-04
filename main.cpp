@@ -18,6 +18,8 @@
 #include <vtkTDxInteractorStyleCamera.h>
 #include <vtkTDxInteractorStyleSettings.h>
 
+Grafo hola;
+
 class MyMouseEvent : public vtkInteractorStyleTrackballCamera
 {
 public:
@@ -84,7 +86,7 @@ int main(int, char*[])
 
    cout<<m_Grafo["Arequipa"]["puno"]<<endl;
   */
-	Grafo hola;
+	
 	hola.insert_vertex("aqp");
 	hola.insert_vertex("lima");
 	hola.insert_Arista("aqp","lima",13.5);
