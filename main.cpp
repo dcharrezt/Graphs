@@ -1,4 +1,3 @@
-#include "grafo.h"
 #include "graph.h"
 
 #include "vtkPolyDataMapper.h"
@@ -88,7 +87,7 @@ int main(int, char*[])
 
    cout<<m_Grafo["Arequipa"]["puno"]<<endl;
   */
-	
+
 	hola.insert_vertex("aqp");
 	hola.insert_vertex("lima");
 	hola.insert_Arista("aqp","lima",13.5);
@@ -124,7 +123,7 @@ int main(int, char*[])
 	//creo el renderer
 	vtkSmartPointer<vtkRenderer> renderer = vtkSmartPointer<vtkRenderer>::New();
 
-	
+
 	//creo la pantalla
 	vtkSmartPointer<vtkRenderWindow> window = vtkSmartPointer<vtkRenderWindow>::New();
 	window->AddRenderer(renderer);
@@ -145,12 +144,12 @@ int main(int, char*[])
 ///
 
 ///
-	
+
 
 	//añado mi propio click(wrong)
 	//vtkSmartPointer<MyMouseEvent> style1 = vtkSmartPointer<MyMouseEvent>::New();
 	//vtkSmartPointer<vtkInteractorStyleTrackballCamera> style2 = vtkSmartPointer<vtkInteractorStyleTrackballCamera>::New();
-	
+
 	//inicializacion
 	//interactor->SetInteractorStyle(style1);
 

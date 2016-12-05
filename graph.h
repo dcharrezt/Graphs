@@ -45,8 +45,8 @@ public:
 	void add_vertex(D v);
 	void add_edge(D v1, D v2, W w);
 
-	void kruskal();
-	void prim(D root);
+	vector<Edge<D, W>> kruskal();
+	vector<Edge<D, W>> prim(D root);
 	void dijkstra(D root);
 };
 
@@ -80,7 +80,7 @@ void Graph<D, W>::add_edge(D org, D dest, W weight) {
 }
 
 template <class D, class W>
-void Graph<D,W>::kruskal() {
+vector<Edge<D, W>> Graph<D,W>::kruskal() {
 	vector<Edge<D, W>> res;
 
 	for (auto c : vertices) {
@@ -109,13 +109,16 @@ void Graph<D,W>::kruskal() {
 	for (Edge<D, W> e : res) {
 		cout << e.vertex1 << " -- " << e.vertex2 << "  " << e.weight << endl;
 	}
+
+	return res;
 }
 
 template <class D, class W>
-void Graph<D,W>::prim(D root) {
+vector<Edge<D, W>> Graph<D,W>::prim(D root) {
 	unordered_map<D, D> res;
 	unordered_map<D, D> PARENT;
 	unordered_map<D, W> KEY;
+	vector<Edge<D, W>> ms;
 
 	for (auto c : vertices) {
 		PARENT[c] = '\0';
@@ -128,9 +131,10 @@ void Graph<D,W>::prim(D root) {
 		D u = *std::min_element(Q.begin(), Q.end(), [&](D x, D y)
 										{return KEY[x] < KEY[y];});  // O(v)
 		vector<char>::iterator itr = remove(Q.begin(), Q.end(), u);  // O(V)
-		Q.erase(itr, Q.end());  // erase() following remove() idiom
+		Q.erase(itr, Q.end());
 		if (PARENT[u] != '\0') {
 			res[u] = PARENT[u];   // This is one edge of MST
+			ms.push_back(Edge<D, W>(res[u], PARENT[u], KEY[u]));
 		}
 		vector< pair<D, Edge<D,W>> > adj = adjacent(u);   // O(E)
 		for (pair<D, Edge<D,W>> v : adj) {
@@ -146,6 +150,8 @@ void Graph<D,W>::prim(D root) {
 	for (auto e : res) {
 		cout << e.first << " -- " << e.second << endl;
 	}
+
+	return ms;
 }
 
 template <class D, class W>
